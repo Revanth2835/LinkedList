@@ -1,86 +1,142 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cstdlib>
 using namespace std;
 
-struct Node{
+struct Node
+{
     int data;
     struct Node *next;
 };
- struct Node *head = NULL;
+struct Node *head = NULL;
 
- void insert(int a){
+void insert(int a)
+{
     struct Node *newNode = new Node();
     newNode->data = a;
-    newNode->next=NULL;
-    if(newNode ==NULL){
+    newNode->next = NULL;
+    if (newNode == NULL)
+    {
         return;
     }
-    if(head==NULL){
-        head=newNode;
+    if (head == NULL)
+    {
+        head = newNode;
         return;
     }
     struct Node *temp = head;
-    while(temp->next !=NULL){
-        temp=temp->next;
-    }
-    temp->next=newNode;
- }
-
- void display(){
-    if(head==NULL){
-        cout<<"\nLL is EMPTY";
-        return ;
-    }
-    struct Node *temp = head;
-    while(temp!=NULL){
-        cout<<temp->data<<" ";
+    while (temp->next != NULL)
+    {
         temp = temp->next;
     }
- }
+    temp->next = newNode;
+}
 
- void deleteEnd(){
-    if(head==NULL){
+void display()
+{
+    if (head == NULL)
+    {
+        cout << "\nLL is EMPTY";
+        return;
+    }
+    struct Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+}
+
+void deleteEnd()
+{
+    if (head == NULL)
+    {
         cout << "LL is Empty";
+        return;
     }
-    if(head->next==NULL){
+    if (head->next == NULL)
+    {
         delete head;
-        head=NULL;
+        head = NULL;
     }
-    else{
+    else
+    {
         struct Node *temp = head;
-        while(temp->next->next !=NULL){
-            temp=temp->next;
+        while (temp->next->next != NULL)
+        {
+            temp = temp->next;
         }
         delete temp->next;
         temp->next = NULL;
     }
- }
+}
+void searchElement(int key)
+{
+    struct Node *temp = head;
 
- int main(){
-    int choice , element;
-    while(1){
-        cout<<"\nLL Operations"<<endl;
-        cout<<"\n1.insert\n2.display\n3.deleteEnd\n4.exit"<<endl;
-        cin>>choice;
-        switch(choice){
-            case 1:
-                cout<<"Enter Element to Add into list"<<endl;
-                cin>>element;
-                insert(element);
-                break;
-            case 2:
-            cout<<"Elements in the LL are: ";
-                display();
-                break;
-            case 3:
-                deleteEnd();
-                cout<<"\nDelete One End Node";
-                break;
-            case 4:
-            cout<<"Exiting..."<<endl;
-                return 0;
-            default:
-                cout << "Invalid Operation"<<endl;
+    while (temp != NULL)
+    {
+        if (temp->data == key)
+        {
+            cout << "Element Found";
+            return;
+        }
+        temp = temp->next;
+    } 
+    cout << "Element Not Found";
+}
+
+void reverseLL(){
+    struct Node *prevNode, *currentNode, *nextNode;
+    prevNode=NULL;
+    currentNode=head;
+    nextNode=head;
+
+    while(nextNode!=NULL){
+        nextNode=nextNode->next;
+        currentNode->next = prevNode;
+        prevNode=currentNode;
+        currentNode=nextNode;
+    }
+    head = prevNode;
+}
+int main()
+{
+    int choice, element, key;
+    while (1)
+    {
+        cout << "\nLL Operations" << endl;
+        cout << "\n1.insert\n2.display\n3.deleteEnd\n4.search\n5.reverseLL\n6.exit" << endl;
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter Element to Add into list" << endl;
+            cin >> element;
+            insert(element);
+            break;
+        case 2:
+            cout << "Elements in the LL are: ";
+            display();
+            break;
+        case 3:
+            deleteEnd();
+            cout << "\nDelete One End Node";
+            break;
+        case 4:
+            cout << "Enter Key to search: ";
+            cin >> key;
+            searchElement(key);
+            break;
+        case 5:
+            reverseLL();
+            cout << "\nLinkedList Reversed";
+            break;
+        case 6:
+            cout << "Exiting..." << endl;
+            return 0;
+        default:
+            cout << "Invalid Operation" << endl;
         }
     }
     return 0;
- }
+}
