@@ -86,6 +86,13 @@ void searchElement(int key)
 }
 
 void reverseLL(){
+    if(head==NULL){
+        cout<<"LL is Empty";
+        return;
+    }
+    if(head->next==NULL){
+        return;
+    }
     struct Node *prevNode, *currentNode, *nextNode;
     prevNode=NULL;
     currentNode=head;
@@ -99,13 +106,39 @@ void reverseLL(){
     }
     head = prevNode;
 }
+
+void deleteKeyElement(int key){
+    if (head == NULL) {
+        cout << "LL is Empty";
+        return;
+    }
+    if (head->data == key) {
+        struct Node *temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+
+    struct Node *temp = head;
+    while (temp->next != NULL) {
+        if (temp->next->data == key) {
+            struct Node *toDelete = temp->next;
+            temp->next = temp->next->next;
+            delete toDelete;
+            return;
+        }
+        temp = temp->next;
+    }
+
+    cout << "Element Not Found";
+}
 int main()
 {
     int choice, element, key;
     while (1)
     {
         cout << "\nLL Operations" << endl;
-        cout << "\n1.insert\n2.display\n3.deleteEnd\n4.search\n5.reverseLL\n6.exit" << endl;
+        cout << "\n1.insert\n2.display\n3.deleteEnd\n4.search\n5.reverseLL\n6.deleteKeyElement\n7.exit" << endl;
         cin >> choice;
         switch (choice)
         {
@@ -132,6 +165,11 @@ int main()
             cout << "\nLinkedList Reversed";
             break;
         case 6:
+            cin>>key;
+             deleteKeyElement(key);
+            cout << "\nKey Element Deleted";
+            break;
+        case 7:
             cout << "Exiting..." << endl;
             return 0;
         default:
