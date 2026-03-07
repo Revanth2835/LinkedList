@@ -33,4 +33,5 @@ int main(){
     insert(20);
     insert(30);
     display();
+    
 }

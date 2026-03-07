@@ -81,38 +81,45 @@ void searchElement(int key)
             return;
         }
         temp = temp->next;
-    } 
+    }
     cout << "Element Not Found";
 }
 
-void reverseLL(){
-    if(head==NULL){
-        cout<<"LL is Empty";
+void reverseLL()
+{
+    if (head == NULL)
+    {
+        cout << "LL is Empty";
         return;
     }
-    if(head->next==NULL){
+    if (head->next == NULL)
+    {
         return;
     }
     struct Node *prevNode, *currentNode, *nextNode;
-    prevNode=NULL;
-    currentNode=head;
-    nextNode=head;
+    prevNode = NULL;
+    currentNode = head;
+    nextNode = head;
 
-    while(nextNode!=NULL){
-        nextNode=nextNode->next;
+    while (nextNode != NULL)
+    {
+        nextNode = nextNode->next;
         currentNode->next = prevNode;
-        prevNode=currentNode;
-        currentNode=nextNode;
+        prevNode = currentNode;
+        currentNode = nextNode;
     }
     head = prevNode;
 }
 
-void deleteKeyElement(int key){
-    if (head == NULL) {
+void deleteKeyElement(int key)
+{
+    if (head == NULL)
+    {
         cout << "LL is Empty";
         return;
     }
-    if (head->data == key) {
+    if (head->data == key)
+    {
         struct Node *temp = head;
         head = head->next;
         delete temp;
@@ -120,8 +127,10 @@ void deleteKeyElement(int key){
     }
 
     struct Node *temp = head;
-    while (temp->next != NULL) {
-        if (temp->next->data == key) {
+    while (temp->next != NULL)
+    {
+        if (temp->next->data == key)
+        {
             struct Node *toDelete = temp->next;
             temp->next = temp->next->next;
             delete toDelete;
@@ -132,13 +141,36 @@ void deleteKeyElement(int key){
 
     cout << "Element Not Found";
 }
+void deleteDuplicates()
+{
+    struct Node *current = head;
+    while (current != NULL)
+    {
+        struct Node *running = current;
+        while (running->next != NULL)
+        {
+            if (running->next->data == current->data)
+            {
+                struct Node *temp = running->next;
+                running->next = running->next->next;
+                delete temp;
+            }
+            else
+            {
+                running = running->next;
+            }
+        }
+        current = current->next;
+    }
+}
+
 int main()
 {
     int choice, element, key;
     while (1)
     {
         cout << "\nLL Operations" << endl;
-        cout << "\n1.insert\n2.display\n3.deleteEnd\n4.search\n5.reverseLL\n6.deleteKeyElement\n7.exit" << endl;
+        cout << "\n1.insert\n2.display\n3.deleteEnd\n4.search\n5.reverseLL\n6.deleteKeyElement\n7.DeleteDuplicates\n8.exit" << endl;
         cin >> choice;
         switch (choice)
         {
@@ -165,11 +197,15 @@ int main()
             cout << "\nLinkedList Reversed";
             break;
         case 6:
-            cin>>key;
-             deleteKeyElement(key);
+            cin >> key;
+            deleteKeyElement(key);
             cout << "\nKey Element Deleted";
             break;
         case 7:
+            deleteDuplicates();
+            cout << "Deleted Duplicates" << endl;
+            break;
+        case 8:
             cout << "Exiting..." << endl;
             return 0;
         default:
